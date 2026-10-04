@@ -359,5 +359,10 @@ Por ser un proyecto en desarrollo activo, hay varias cosas que conviene saber an
 ## Licencia
 
 Todos los derechos reservados. Este repositorio se publica con fines de referencia, consulta y
-portfolio — no se concede licencia de uso, copia, modificación o distribución del código sin
+portfolio — no se concede licencia de copia, modificación o distribución del código sin
 permiso expreso del autor.
+Sí puede utilizarse para el propósito que fue diseñado: día a día de los usuarios finales.
+No se aceptaría (aunque se asume) ver funcionalidad propias únicas copiadas en otros proyectos de otra autoría.
+Se pueden aportar ideas para seguir creciendo; y si sólo se quiere la idea base,.. casi que vale más la pena crear una app de cero, antes que clonar esta. Es un AI slop horrible por que no vamos a dedicar tiempo en una herramienta de esta índole. Pero ha sido diseñada con mucha pasión, lo otro no quita esto... Y funciona. Que es lo principal...
+
+
