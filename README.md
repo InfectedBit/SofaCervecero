@@ -39,17 +39,76 @@ maneja entero con mando desde el propio sofá.
 
 ## Capturas de pantalla
 
-*(Pendiente de añadir — ver la lista de capturas más abajo.)*
+### Biblioteca
 
-<!--
-Apartados clave a capturar y colocar aquí (ver detalle completo al final de este documento):
-docs/screenshots/biblioteca-grid.png
-docs/screenshots/ajustes-temas.png
-docs/screenshots/menu-contextual.png
-docs/screenshots/editar-juego.png
-docs/screenshots/ajustes-mando.png
-docs/screenshots/ajustes-sofa.png
--->
+![Biblioteca categorizada](docs/screenshots/biblioteca.png)
+**Biblioteca categorizada.** Todo lo que tienes instalado —y lo que has tenido— de todas las
+fuentes (Steam, carpetas propias, emuladores…) en una sola cuadrícula, agrupada sola por los ejes
+de categorías que definas.
+
+![Biblioteca filtrada por coop y pantalla partida](docs/screenshots/biblioteca-coop-splitscreen.png)
+**Biblioteca de juegos específicamente con Online Co-Op, Couch Co-Op, Split-Screen, etc.** —
+cómodo de identificar, estén donde estén. Filtrando por estas categorías se ve de un vistazo qué
+hay instalado para jugar juntos, sin que importe en qué tienda o carpeta esté cada juego.
+
+### Organización de cada juego
+
+![Opciones con clic derecho sobre un juego](docs/screenshots/click-derecho-sobre-app.png)
+**Opciones con clic derecho sobre una app.** Lanzar, editar, clasificar en categorías, marcar
+como favorito, abrir su carpeta, cambiar de estado o eliminarlo — todo desde un menú contextual
+propio, también accesible con el mando.
+
+![Opciones al editar un juego](docs/screenshots/editar-app-independiente.png)
+**Opciones al editar una app/juego.** Título, plataforma, número de jugadores, carátula,
+ejecutable principal y sus argumentos, y categorías — todo editable a mano y protegido frente al
+reescaneo en cuanto lo tocas.
+
+![Launchers y ejecutables adicionales](docs/screenshots/launchers-y-ejecutables.png)
+**Editar una app y añadir launchers específicos, argumentos adicionales o ejecutables extra.**
+Por ejemplo, Elden Ring se puede lanzar por Steam, sin iniciar Steam, o por un ejecutable aparte
+—el del mod *Seamless Co-op*— todo configurado desde la misma ficha.
+
+### Lanzar un juego
+
+![Opciones para iniciar un juego ya configurado](docs/screenshots/iniciar-steam-seamlesscoop-etc.png)
+**Distintas opciones para iniciar el juego configurado previamente.** La ficha del juego ofrece
+cada forma de lanzarlo que le hayas añadido —aquí, Elden Ring normal o directo a Seamless Co-op—
+junto a su tiempo de juego real.
+
+![Juego con launcher independiente](docs/screenshots/iniciar-juego-launcher-independiente.png)
+**Caso de un juego con un launcher independiente**, que no es el de una tienda como Steam, EA o
+Epic Games (aquí, el launcher propio de AlderonGames para *Path of Titans*). Sirve con cualquier
+launcher y cualquier juego: elegir si abrir el juego directo o pasar antes por su launcher.
+
+![Aviso de cuenta específica de Steam al lanzar](docs/screenshots/iniciar-juego-cuenta-especifica-steam.png)
+**Para juegos en Steam en distintas cuentas**, se puede configurar un aviso que pide confirmar la
+cuenta específica antes de lanzar; Steam permite cambiar de cuenta con el mando de forma fácil, se
+cambia a la cuenta correspondiente y el juego se abre. Este mismo mecanismo también sirve como un
+**aviso preventivo** para recordar cualquier cosa: el mensaje se personaliza, así que vale igual
+para un «¿has cerrado X app antes de iniciar esta?» que para preguntarte si has apagado el horno.
+
+### Aspecto y mando
+
+![Selector de temas](docs/screenshots/ajustes-temas.png)
+**Temas predeterminados, con posibilidad de editar cada color y elemento.** Varios temas de
+fábrica más los tuyos propios, con vista previa en vivo y color de acento configurable.
+
+![Mapeo del mando](docs/screenshots/ajustes-mando-mapeo.png)
+**Posibilidad de mapear cada control del mando**, tanto para mando de Xbox como de PlayStation.
+El stick derecho hace de **cursor** y mueve el ratón, y los **triggers hacen de clic izquierdo y
+derecho** — la app entera se puede manejar sin tocar el teclado ni el ratón.
+
+![Fuentes de carátulas](docs/screenshots/ajustes-arte.png)
+**Posibilidad de añadir claves de API para buscar carátulas de juegos menos conocidos.** La
+cascada ya cubre sola lo más habitual (carpeta del juego, caché de Steam, tienda de Steam);
+SteamGridDB y RAWG amplían esa búsqueda a lo que no se reconoce por defecto, con claves gratuitas
+y opcionales.
+
+### Modo Sofá
+
+![Modo Sofá disponible](docs/screenshots/iniciando-modo-sofa.png)
+**¡Modo Sofá disponible!** Se lanza desde la propia biblioteca y prepara la sesión para jugar
+desde el sofá, mando en mano.
 
 ---
 
@@ -151,14 +210,26 @@ Para **compilar**:
 - WebView2 Runtime (ya viene instalado de serie en Windows 11; en Windows 10 puede requerir
   instalarlo aparte) — solo hace falta para *ejecutar*, no para compilar.
 
-Para **usarla** (una vez compilada): Windows 10/11 con WebView2 Runtime. No hay instalador
-publicado todavía — ver más abajo.
+Para **usarla** (una vez instalada o descargada): Windows 10/11 con WebView2 Runtime (ya viene de
+serie en Windows 11).
 
 ---
 
 ## Instalación / cómo probarla
 
-De momento no hay releases publicadas: la forma de probar la app es compilarla tú mismo.
+La forma más rápida es descargar la última build desde
+**[Releases](https://github.com/InfectedBit/SofaCervecero/releases/latest)**. Hay dos opciones,
+ambas `x64` (el nombre del archivo incluye la versión, p. ej. `_0.1.0_`):
+
+- **`SofaCervecero_<versión>_x64-setup.exe`** — instalador (recomendado): entrada en el menú
+  inicio, desinstalador, y gestiona WebView2 si falta en el sistema.
+- **`SofaCervecero_<versión>_x64-portable.exe`** — portable: se copia y se ejecuta, sin instalar
+  nada.
+
+> Las releases están marcadas como **pre-release**: es una build en desarrollo activo, no una
+> versión estable — ver el aviso al principio de este documento.
+
+También se puede compilar desde el código, por ejemplo para probar la rama `main` al día:
 
 ```powershell
 git clone <url-de-este-repositorio>
@@ -167,7 +238,7 @@ npm install
 npm run tauri dev      # modo desarrollo, con recarga en caliente de la interfaz
 ```
 
-Para generar un `.exe` o un instalador:
+Para generar un `.exe` o un instalador propios:
 
 ```powershell
 npm run tauri build                   # instalador NSIS + .exe
@@ -278,36 +349,3 @@ Por ser un proyecto en desarrollo activo, hay varias cosas que conviene saber an
 Todos los derechos reservados. Este repositorio se publica con fines de referencia, consulta y
 portfolio — no se concede licencia de uso, copia, modificación o distribución del código sin
 permiso expreso del autor.
-
----
-
-## Apéndice: capturas pendientes de incorporar
-
-Lista de pantallas clave que ilustran mejor la app, para capturar y colocar en
-`docs/screenshots/` (sustituyendo el placeholder de la sección *Capturas de pantalla*):
-
-**Imprescindibles**
-1. **Biblioteca / vista principal** — la cuadrícula con la barra lateral de fuentes, categorías y
-   filtros visible, y la barra superior completa (buscador, Vista, Categorías, Favoritos, tamaño
-   de tarjeta, Fuentes, Añadir, Escanear, Ajustes).
-2. **Ajustes → Aspecto** — el selector de temas (son varios, con vista previa en vivo) y el color
-   de acento.
-3. **Menú contextual** sobre una tarjeta de juego (clic derecho): lanzar, editar, clasificar,
-   favoritos, abrir carpeta, cambiar de estado.
-4. **Editar juego** — el diálogo de edición: categorías, ejecutables, carátula.
-
-**Recomendables**
-5. **Ajustes → Mando** — remapeo de botones y guía del mando.
-6. **Ajustes → Sofá** — selector de pantalla/monitor para el Modo Sofá.
-7. **Popup de lanzamiento** — la cuenta atrás / elección juego-vs-launcher al lanzar algo.
-8. **Gestión de Fuentes** — el diálogo donde se añaden carpetas/Steam como orígenes de biblioteca.
-9. **Ajustes → TimeTrack** — filtro por horas y gráficas de tiempo jugado por juego.
-10. **Vista en lista** (alternativa a la cuadrícula) y/o una sección con el eje de categorías
-    anidado en acción (p. ej. *Categorías (todas)*).
-
-**Opcionales**
-11. Guía de mando en pantalla (overlay de ayuda de botones).
-12. Barra de tareas en segundo plano durante un escaneo en curso.
-
-Al añadir las imágenes, actualiza la sección *Capturas de pantalla* más arriba con los
-`![alt](docs/screenshots/archivo.png)` correspondientes y borra este apéndice.
