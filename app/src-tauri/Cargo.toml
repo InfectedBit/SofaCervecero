@@ -1,0 +1,54 @@
+[package]
+name = "SofaCervecero"
+version = "0.1.0"
+description = "Una app para usar desde el sofá o con cervezas"
+authors = ["nosotros"]
+edition = "2024"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon", "image-png", "protocol-asset"] }
+tauri-plugin-opener = "2"
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rusqlite = { version = "0.32", features = ["bundled"] }
+# Cliente HTTP: la API local de TimeTrack (127.0.0.1) y las fuentes de arte (guión D.0_3).
+# El TLS lo pone **schannel**, el del propio Windows, vía `native-tls`: no se empaqueta un
+# almacén de raíces ni se compila `ring`, y vale el certificado del sistema (proxies de
+# empresa incluidos). Revisa ADR-003, que daba por hecho que solo se hablaba con localhost.
+ureq = { version = "2", default-features = false, features = ["native-tls"] }
+native-tls = "0.2"
+tauri-plugin-single-instance = "2"
+
+[target.'cfg(windows)'.dependencies]
+# Solo para localizar Steam y leer la cuenta activa (HKCU\Software\Valve\Steam).
+winreg = "0.52"
+# Mover el cursor del sistema y emitir clics desde el mando (guión E.0_3). Esta versión ya
+# está en el árbol de dependencias de Tauri, así que no añade descarga ni binario nuevo.
+windows-sys = { version = "0.59", features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Input_KeyboardAndMouse",
+    # Inventario de pantallas para el Modo Sofá (guión E.0_4): enumeración, DPI por monitor y
+    # nombres amigables («LG TV SSCR2» en vez de «\\.\DISPLAY3»).
+    "Win32_Graphics_Gdi",
+    "Win32_UI_HiDpi",
+    "Win32_Devices_Display",
+    # XInput a mano para el botón Xbox, que la API pública no expone (guión E.0_4 fase 4).
+    "Win32_System_LibraryLoader",
+    # Traer la ventana al frente saltando el bloqueo de primer plano de Windows (E.0_4 §9).
+    "Win32_System_Threading",
+] }
+

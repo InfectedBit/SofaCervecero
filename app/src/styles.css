@@ -1,0 +1,2121 @@
+:root {
+  --bg: #0e0f13;
+  --bg2: #15171e;
+  --panel: #1b1e27;
+  --panel2: #232734;
+  --text: #e7e9ee;
+  --muted: #9aa0ad;
+  --accent: #4ade80;
+  --accent2: #22c55e;
+  --border: #2a2e3a;
+  --green: #4ade80;
+  --danger: #f87171;
+
+  font-family: "Segoe UI", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+}
+.brand {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+.search {
+  flex: 0 1 320px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  outline: none;
+}
+.spacer {
+  flex: 1;
+}
+.btn {
+  background: var(--panel2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn:hover {
+  background: #2b3040;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.btn.primary {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  color: #06210f;
+  font-weight: 600;
+}
+.btn.primary:hover {
+  background: var(--accent);
+}
+.btn.big {
+  font-size: 16px;
+  padding: 12px 18px;
+  width: 100%;
+}
+
+/* Body layout */
+.body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 230px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 10px;
+  overflow-y: auto;
+}
+.side-header {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  padding: 6px 8px;
+}
+.side-group {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 12px;
+  padding: 4px 8px;
+}
+.cat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.cat:hover {
+  background: var(--panel);
+}
+.cat.active {
+  background: var(--panel2);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.count {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Grid */
+.grid-area {
+  flex: 1;
+  overflow-y: auto;
+  /*
+   * Sin `padding-top`, y es a propósito: lo pone `.secciones`.
+   *
+   * El padding de un contenedor con scroll queda **dentro** del scrollport, así que el
+   * contenido se ve al pasar por esa franja y una cabecera `sticky; top: 0` se clava por
+   * encima de ella — dejando asomar los pies de las carátulas anteriores. Puesto en el
+   * contenido, se desplaza con él y el problema desaparece.
+   */
+  padding: 0 18px 18px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-size, 150px), 1fr));
+  gap: 16px;
+}
+.card {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text);
+  text-align: left;
+}
+.cover {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--panel2) center / cover no-repeat;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+.card:hover .cover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+  border-color: var(--accent2);
+}
+.ph {
+  font-size: 40px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.play {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent2);
+  color: #06210f;
+  font-size: 15px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+.card:hover .play {
+  opacity: 1;
+}
+.title {
+  margin-top: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.empty {
+  height: 100%;
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
+/* Overlay / modals */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.detail,
+.dialog {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.detail {
+  width: min(860px, 92vw);
+  display: flex;
+  gap: 20px;
+  padding: 22px;
+}
+.detail-left {
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.detail-cover {
+  aspect-ratio: 3 / 4;
+  background: var(--panel2) center / cover no-repeat;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail-right {
+  flex: 1;
+  min-width: 0;
+}
+.detail-right h2 {
+  margin: 0 0 14px;
+}
+.meta {
+  display: flex;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.meta b {
+  width: 110px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.meta span {
+  flex: 1;
+  word-break: break-all;
+}
+/* «📈 Gráficas» va dentro de la línea del tiempo de juego, no en la columna de acciones: la
+   pregunta «¿y cómo se reparten esas horas?» nace al leer el dato (guión T.0_2 §3). Pequeño y
+   en línea, para que no compita con Lanzar ni con Editar. */
+.graficas {
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.muted {
+  color: var(--muted);
+  margin-top: 12px;
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Dialog form */
+.dialog {
+  width: min(460px, 92vw);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* **Nunca más alto que la pantalla.** Sin esto, un diálogo largo —el mapeo de botones, con
+     doce acciones— se salía por abajo y la parte de fuera no había forma de alcanzarla. Y en
+     Modo Sofá, con todo un 45 % más grande, pasaba con casi cualquiera.
+
+     De paso arregla lo otro: al ser el diálogo el que **tiene** el scroll, la cruceta ya lo
+     recorre sola —`scrollIntoView` al mover el foco— y el stick izquierdo encuentra un
+     contenedor desplazable sobre el que actuar. Antes no había ninguno: el diálogo no se
+     desbordaba, **crecía**. */
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  /* Que el scroll no se escape al grid de detrás al llegar al final. */
+  overscroll-behavior: contain;
+}
+/* Las pestañas se quedan a la vista al recorrer un diálogo largo: perder de vista en qué
+   apartado estás es lo que convierte una lista larga en un laberinto. */
+.dialog > .tabs {
+  position: sticky;
+  top: -22px;
+  z-index: 2;
+  margin-top: -4px;
+  padding-top: 4px;
+  background: var(--panel);
+}
+/* Y los botones finales se quedan **abajo**. «Cerrar» al final de una lista de doce acciones
+   es un botón que hay que ir a buscar; con el mando, además, recorriéndolas todas. */
+.dialog > .actions {
+  position: sticky;
+  bottom: -22px;
+  z-index: 2;
+  margin-bottom: -4px;
+  padding: 8px 0 4px;
+  background: var(--panel);
+}
+/* En Modo Sofá el contenido es un 45 % más grande; la caja tiene que acompañar, o el texto se
+   amontona en una columna estrecha. */
+:root[data-sofa="1"] .dialog {
+  width: min(calc(460px * var(--sofa-escala)), 92vw);
+}
+:root[data-sofa="1"] .dialog.detail {
+  width: min(calc(860px * var(--sofa-escala)), 94vw);
+}
+.dialog h3 {
+  margin: 0 0 6px;
+}
+/* Los mismos estilos de formulario valen para cualquier panel flotante: el de filtros
+   heredaba solo del navegador y sus desplegables se veían en blanco (guión A.0_4 §6). */
+.dialog label,
+.filter-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.dialog input,
+.dialog select,
+.filter-panel input,
+.filter-panel select {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 8px;
+  width: 100%;
+}
+/* Las opciones del desplegable las pinta el sistema: sin esto salen negras sobre negro
+   en los temas claros (y al revés). */
+.dialog option,
+.filter-panel option {
+  background: var(--panel2);
+  color: var(--text);
+}
+.dialog input:focus,
+.dialog select:focus,
+.filter-panel input:focus,
+.filter-panel select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.path-row {
+  display: flex;
+  gap: 8px;
+}
+.path-row input {
+  flex: 1;
+}
+.path-row .btn {
+  white-space: nowrap;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+.err {
+  color: var(--danger);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* Detail actions + danger */
+.detail-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+.btn.danger {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 35%, var(--border));
+}
+.btn.danger:hover {
+  background: color-mix(in srgb, var(--danger) 18%, transparent);
+}
+.btn.sm {
+  padding: 4px 8px;
+}
+
+/* Edit dialog */
+.dialog.edit {
+  width: min(640px, 94vw);
+  max-height: 88vh;
+  overflow-y: auto;
+}
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.section {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+.section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.dialog .check {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+.dialog .check input {
+  width: auto;
+}
+.exec-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.exec-label {
+  font-weight: 600;
+  min-width: 90px;
+}
+.exec-path {
+  flex: 1;
+  color: var(--muted);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.exec-add {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-bottom: 10px;
+}
+.actions.between {
+  justify-content: space-between;
+}
+.right-actions {
+  display: flex;
+  gap: 10px;
+}
+.toast {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(680px, 90vw);
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  padding: 10px 10px 10px 16px;
+  border-radius: 10px;
+  /* Por encima de los diálogos (50): un aviso que queda debajo de lo que lo provoca no sirve. */
+  z-index: 130;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+.toast-x {
+  flex: none;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.toast-x:hover {
+  color: var(--text);
+  background: var(--panel);
+}
+
+/* ---- C.0_2: progreso de escaneo, estados de card y avisos ---- */
+.scan-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  max-width: 320px;
+  margin-left: 12px;
+  line-height: 1.25;
+}
+.scan-current {
+  font-size: 12px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.scan-meta {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  padding: 3px 6px;
+  border-radius: 6px;
+  background: rgba(14, 15, 19, 0.85);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.badge.warn {
+  color: #fbbf24;
+  border-color: #6b4b12;
+}
+.card.missing .cover {
+  opacity: 0.45;
+  filter: grayscale(0.7);
+}
+.card.missing:hover .cover {
+  opacity: 0.8;
+}
+.warn-banner {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid #6b4b12;
+}
+.small {
+  font-size: 12px;
+}
+.hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---- Foco navegable (teclado hoy, mando en M5) ---- */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.card:focus-visible {
+  outline: none;
+}
+.card:focus-visible .cover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent), 0 10px 24px rgba(0, 0, 0, 0.5);
+}
+.card:focus-within .play {
+  opacity: 1;
+}
+.cat:focus-visible {
+  outline-offset: -2px;
+}
+
+/* ---- Diálogo de fuentes ---- */
+.src-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  max-height: 46vh;
+  overflow-y: auto;
+}
+.src-row {
+  display: grid;
+  grid-template-columns: minmax(130px, auto) 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.src-row.off {
+  opacity: 0.5;
+}
+.src-kind {
+  font-size: 12px;
+  color: var(--muted);
+}
+.src-path {
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.src-meta {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---- Ronda 1: filtros, estados y popup de lanzamiento ---- */
+.filter-wrap {
+  position: relative;
+}
+.filter-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 60;
+  width: 300px;
+  padding: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.badge.players {
+  left: auto;
+  right: 8px;
+  color: var(--accent);
+  border-color: var(--accent2);
+}
+.side-empty {
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Popup "¿launcher o juego directo?" */
+.dialog.launch {
+  width: min(560px, 94vw);
+}
+.launch-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0;
+}
+.launch-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 14px;
+  text-align: left;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.12s, transform 0.12s;
+}
+.launch-opt:hover,
+.launch-opt:focus-visible {
+  border-color: var(--accent2);
+  transform: translateY(-1px);
+}
+.launch-opt.primary {
+  border-color: var(--accent2);
+}
+.launch-icon {
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--accent);
+}
+.launch-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.launch-text em {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.launch-text small {
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+/* ---- Ronda 2: aspecto (temas, forma de card, vista lista) ---- */
+.grid.square .cover {
+  aspect-ratio: 1 / 1;
+}
+
+/* Vista lista */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.row {
+  display: grid;
+  grid-template-columns: 40px 1fr repeat(4, auto) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text);
+}
+.row:hover,
+.row:focus-visible {
+  background: var(--panel2);
+  border-color: var(--border);
+  outline: none;
+}
+.row:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.row.missing {
+  opacity: 0.5;
+}
+.row-cover {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: var(--panel2) center / cover no-repeat;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.row-cover .ph {
+  font-size: 16px;
+}
+.row-title {
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row-meta {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.row-meta.warn {
+  color: #fbbf24;
+}
+
+/* Selector de temas */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.swatch {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text);
+  text-align: left;
+}
+.swatch.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.swatch-colors {
+  display: flex;
+  height: 18px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.swatch-colors i {
+  flex: 1;
+}
+.swatch-name {
+  font-size: 12px;
+}
+/* Atajo al menú del tema propio. Antes era una ✕ que borraba de un clic y sin preguntar. */
+.swatch-mas {
+  position: absolute;
+  top: 2px;
+  right: 6px;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+}
+.swatch-mas:hover {
+  color: var(--accent);
+}
+/* ---- E.0_4 fase 2: Modo Sofá ----
+   No es una interfaz aparte, es un **estado** de la de siempre. Cambia tres cosas: el tamaño del
+   texto, el de las tarjetas, y qué se esconde. Nada de esto rehace la maquetación: todo el CSS
+   del proyecto ya va con variables, así que basta con multiplicarlas.
+
+   Lo que se esconde es lo que no se toca con un mando a dos metros: rutas, deslizadores finos y
+   cajas de texto. Lo que se agranda es lo que se lee desde el sofá. */
+/* La escala vive en `:root`, **no** en `.app`, y por dos razones que costaron un fallo:
+
+   1. Los diálogos se montan fuera de `.app` —son hermanos suyos al final del `<body>`—, así que
+      una escala colgada de `.app` dejaba los menús pequeños mientras el fondo era grande.
+   2. Declararla **siempre** (valor 1 en normal) convierte entrar y salir del modo en un cambio
+      de número, no en «hay regla / no hay regla». Sin eso, el tamaño saltaba de golpe al pasar
+      de una cascada a otra, y no había forma de animarlo.
+
+   Se marca con `data-sofa` en el elemento raíz, el mismo recurso que ya usa `data-nav="mando"`. */
+:root {
+  --sofa-escala: 1;
+}
+:root[data-sofa="1"] {
+  --sofa-escala: 1.45;
+}
+/* Base explícita: todo lo que escala parte de aquí. */
+.app,
+.dialog,
+.menu-pop {
+  font-size: calc(14px * var(--sofa-escala));
+  transition: font-size 0.25s ease;
+}
+.card .title,
+.row-title,
+.cat,
+.sidebar h4 {
+  font-size: calc(13px * var(--sofa-escala));
+  transition: font-size 0.25s ease;
+}
+.sidebar {
+  transition: width 0.25s ease;
+}
+:root[data-sofa="1"] .sidebar {
+  width: calc(230px * var(--sofa-escala));
+}
+:root[data-sofa="1"] .btn {
+  padding: calc(8px * var(--sofa-escala)) calc(12px * var(--sofa-escala));
+  font-size: calc(13px * var(--sofa-escala));
+}
+:root[data-sofa="1"] .seccion-cab {
+  height: calc(34px * var(--sofa-escala));
+  font-size: calc(12px * var(--sofa-escala));
+}
+/* El deslizador de tamaño de card y la caja de búsqueda no se usan desde el sofá: el primero
+   pide precisión de ratón y la segunda, teclado. */
+:root[data-sofa="1"] .card-size,
+:root[data-sofa="1"] .search {
+  display: none;
+}
+/* Quien prefiera que no se mueva nada, que no se mueva. */
+@media (prefers-reduced-motion: reduce) {
+  .app,
+  .dialog,
+  .menu-pop,
+  .card .title,
+  .row-title,
+  .cat,
+  .sidebar h4,
+  .sidebar {
+    transition: none;
+  }
+}
+
+/* El círculo que se llena al mantener el botón. Centrado y por encima de todo: mientras dura,
+   es lo único que importa, y soltar lo cancela. */
+.circulo-wrap {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 210;
+  pointer-events: none;
+}
+.circulo {
+  width: 120px;
+  height: 120px;
+  /* El trazo arranca arriba y gira como un reloj, no desde las 3 en punto. */
+  transform: rotate(-90deg);
+}
+.circulo-fondo {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 6;
+}
+.circulo-barra {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.1s linear;
+}
+.circulo-texto {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* La cuenta atrás tras cambiar las pantallas: un diálogo modal como los demás, pero con capa
+   propia por encima de todas.
+
+   Era un aviso flotante y ahí estaba el fallo: un `.overlay` normal vive en z-index 50, o sea
+   **por debajo** del menú contextual (120) y del toast (130). Y es la única capa que no se puede
+   tapar — si no se ve, no se contesta, y lo que no se contesta se deshace. 200 la pone encima de
+   todo menos del círculo de progreso (210), que no se solapa nunca con esto. */
+.overlay.sofa-confirmar {
+  z-index: 200;
+  /* El borde de acento se queda: distingue «te estoy preguntando algo con consecuencias» de
+     una confirmación cualquiera. */
+}
+.overlay.sofa-confirmar .dialog {
+  border-color: var(--accent);
+}
+/* Las tres opciones del reparto: cada una con su explicación, que es lo que diferencia
+   «hacer principal» de «dejar solo esa» para quien no lo haya hecho nunca. */
+.reparto {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 8px 0;
+}
+.reparto .check {
+  align-items: flex-start;
+  gap: 10px;
+}
+.reparto .check > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.reparto .hint {
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* ---- E.0_4: selector de pantalla ----
+   Las pantallas van en posición absoluta dentro de un lienzo con la proporción real del
+   escritorio, para que se reconozcan por dónde están y no por su nombre de dispositivo. */
+.pantallas {
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.pantalla {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  /* El hueco entre pantallas es visual: en el escritorio son contiguas. */
+  margin: 2px;
+  padding: 4px;
+  overflow: hidden;
+  background: var(--panel2);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.25;
+}
+.pantalla:hover {
+  border-color: var(--accent2);
+  color: var(--text);
+}
+.pantalla.elegida {
+  border-color: var(--accent);
+  color: var(--text);
+  box-shadow: inset 0 0 0 9999px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.pantalla-nombre {
+  font-size: 12px;
+  font-weight: 600;
+}
+.pantalla-datos {
+  font-size: 11px;
+}
+.pantalla-marca {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+/* Cada acción de carátulas con su explicación debajo: dos botones pegados en una fila no
+   decían cuál era cuál, y el secundario se perdía con los temas muy oscuros (D.0_4). */
+.accion-arte {
+  margin-bottom: 10px;
+}
+.accion-arte .hint {
+  display: block;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+/* Una tarjeta por fuente de arte: qué cubre, interruptor y, si la pide, su clave (D.0_3). */
+.fuente-arte {
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.fuente-arte .hint {
+  display: block;
+  margin: 4px 0 8px;
+  line-height: 1.5;
+}
+.fuente-arte .path-row + .hint {
+  margin-bottom: 0;
+}
+.theme-editor-cab {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.theme-editor {
+  padding: 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.theme-vars {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+  margin: 10px 0;
+}
+.theme-var {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.theme-var input[type="color"] {
+  width: 32px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: none;
+}
+
+/* Administración de categorías */
+.cat-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 42vh;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+.cat-group-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.cat-group-name {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cat-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+.cat-name {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  cursor: text;
+  padding: 2px 0;
+}
+.cat-name:hover {
+  color: var(--accent);
+}
+.inline-input {
+  font-size: 13px;
+  padding: 3px 6px;
+}
+
+/* ---- Mando: guía, ayuda contextual y remapeo (guión E.0_2) ---- */
+.tecla {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 7px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  flex: none;
+}
+.tecla.sm {
+  min-width: 22px;
+  height: 19px;
+  padding: 0 5px;
+  font-size: 10px;
+  border-radius: 5px;
+}
+
+/* Guía completa (Select) */
+.dialog.guia {
+  width: min(560px, 94vw);
+}
+.guia-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 14px 0;
+}
+.guia-fila {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 10px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.guia-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.guia-texto em {
+  font-style: normal;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* Ayuda pequeña abajo a la derecha */
+.hints {
+  position: fixed;
+  right: 14px;
+  bottom: 12px;
+  z-index: 70;
+  display: flex;
+  gap: 14px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+.hint-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Remapeo en Ajustes */
+.mapa {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+.mapa-fila {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.mapa-fila.capturando {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.mapa-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.mapa-texto em {
+  font-style: normal;
+  font-size: 11px;
+  color: var(--muted);
+}
+.dup {
+  color: #fbbf24;
+}
+
+/* ---- Foco con mando (guión E.0_3) ----
+   `:focus-visible` NO se activa con eventos sintéticos: Chromium solo lo aplica si cree que
+   la última interacción fue de teclado, y las pulsaciones que fabricamos desde el mando no
+   cuentan. Por eso el foco se movía dentro de los menús pero no se veía. Mientras se navega
+   con mando (`data-nav="mando"` en <html>) se resalta el `:focus` a secas. */
+:root[data-nav="mando"] :focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+:root[data-nav="mando"] .card:focus,
+:root[data-nav="mando"] .row:focus {
+  outline: none;
+}
+:root[data-nav="mando"] .card:focus .cover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent), 0 10px 24px rgba(0, 0, 0, 0.5);
+}
+:root[data-nav="mando"] .row:focus {
+  background: var(--panel2);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+/* Los botones y opciones de los menús, bien marcados: desde el sofá hay que verlo. */
+:root[data-nav="mando"] .btn:focus,
+:root[data-nav="mando"] .cat:focus,
+:root[data-nav="mando"] .swatch:focus,
+:root[data-nav="mando"] .launch-opt:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* El `+` entre las dos teclas de una combinación (`LB` + `RB`). */
+.tecla-mas {
+  margin: 0 3px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* Color serigrafiado de los botones de acción en las guías. */
+.tecla[data-color] {
+  color: var(--color-boton);
+  border-color: color-mix(in srgb, var(--color-boton) 45%, var(--border));
+}
+
+/* ---- Barra de filtros activos (guión F.0_3) ---- */
+.contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+.filtros-activos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.fa-total {
+  font-size: 12px;
+  color: var(--muted);
+  margin-right: 4px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 14%, var(--panel2));
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+  cursor: pointer;
+}
+.chip:hover {
+  border-color: var(--accent);
+}
+.chip-x {
+  font-size: 10px;
+  color: var(--muted);
+}
+.chip:hover .chip-x {
+  color: var(--danger);
+}
+
+/* ---- Ronda 5b: controles y scrollbars con el tema (H11/H12) ---- */
+/* Las barras del sistema cantan muchísimo con un tema oscuro; se pintan a mano. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent) 55%, var(--border));
+  background-clip: content-box;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Desplegables: sin la flecha nativa, con una propia y colores del tema. */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 28px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 15px) calc(50% + 1px), calc(100% - 10px) calc(50% + 1px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+select:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+/* El desplegable abierto lo pinta el sistema: al menos que no sea blanco. */
+select option {
+  background: var(--panel);
+  color: var(--text);
+}
+
+/* Casillas con el acento del tema en vez del azul del navegador. */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* Deslizadores. */
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  padding: 0;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+}
+
+/* Selectores de color: el cuadrito nativo no encaja con nada. */
+input[type="color"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 42px;
+  height: 30px;
+  padding: 2px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 5px;
+}
+
+/* ---- Menú desplegable de acciones (A11) ---- */
+.menu-wrap {
+  position: relative;
+}
+.menu-pop {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  z-index: 40;
+  min-width: 190px;
+  padding: 5px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+.menu-item:hover,
+.menu-item:focus-visible {
+  background: var(--panel2);
+}
+.menu-item.danger {
+  color: var(--danger);
+}
+.menu-item.danger:hover,
+.menu-item.danger:focus-visible {
+  background: color-mix(in srgb, var(--danger) 16%, transparent);
+}
+.menu-sep {
+  height: 1px;
+  margin: 3px 6px;
+  background: var(--border);
+}
+
+/* ---- Marquesina del título largo (A13) ---- */
+.title {
+  position: relative;
+}
+.title-marquesina {
+  display: inline-block;
+  white-space: nowrap;
+}
+/* Solo se mueve si de verdad no cabe: lo marca el componente con --sobra. */
+.card:hover .title-marquesina[data-sobra],
+.card:focus-within .title-marquesina[data-sobra] {
+  animation: correr var(--duracion, 4s) linear infinite;
+}
+@keyframes correr {
+  0%,
+  12% {
+    transform: translateX(0);
+  }
+  88%,
+  100% {
+    transform: translateX(calc(-1 * var(--sobra, 0px)));
+  }
+}
+
+/* ---- Ronda 5c: tareas en segundo plano (guión J.0_1) ---- */
+.tareas {
+  position: relative;
+  margin-left: 10px;
+}
+.tareas-chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 280px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.tareas-chip.activa {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+.tareas-texto {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tareas-mas {
+  flex: none;
+  color: var(--accent);
+}
+.girando {
+  display: inline-block;
+  animation: girar 1.1s linear infinite;
+  color: var(--accent);
+}
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.tareas-pop {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 60;
+  width: 360px;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: 6px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tarea-fila {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 9px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.tarea-estado {
+  color: var(--accent);
+  font-size: 13px;
+}
+.tarea-estado.err {
+  color: var(--danger);
+}
+.tarea-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 12px;
+}
+.tarea-texto em {
+  font-style: normal;
+  font-size: 11px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Ronda 5d: categorías por fuente y confirmación al lanzar ---- */
+.src-cats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: -2px 0 6px;
+  padding: 10px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.cat-prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: -2px 0 6px;
+  padding: 10px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.cat-prompt input {
+  flex: 1;
+  min-width: 220px;
+}
+.cat-prompt .hint {
+  flex-basis: 100%;
+}
+
+/* Confirmaciones obligatorias antes de lanzar (C8). */
+.confirmaciones {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: color-mix(in srgb, #fbbf24 10%, transparent);
+  border: 1px solid #6b4b12;
+}
+.confirmacion {
+  align-items: flex-start;
+  gap: 10px;
+}
+.confirmacion span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.launch-opt:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.launch-opt:disabled:hover {
+  transform: none;
+  border-color: var(--border);
+}
+
+/* El chip también se usa como etiqueta con ✕ dentro de formularios. */
+.chip-x {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--muted);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+/* ---- Carátula como <img>, con respaldo al fallar (guión D.0_2 §3) ---- */
+.cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.row-cover {
+  position: relative;
+  overflow: hidden;
+}
+.row-cover .cover-img {
+  object-fit: contain;
+}
+.detail-cover {
+  position: relative;
+  overflow: hidden;
+}
+/* La inicial de reserva queda centrada por encima del hueco vacío. */
+.cover .ph,
+.row-cover .ph,
+.detail-cover .ph {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Carátula en el diálogo de edición (guión D.0_2 §5) ---- */
+.caratula-edit {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.caratula-previa {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.caratula-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* ---- Guión A.0_4: menú contextual, confirmaciones, favoritos y slider de la barra ---- */
+
+/* Menú contextual (clic derecho). Es el mismo cuerpo que `.menu-pop`, pero colocado a mano
+   sobre la ventana, así que se anulan las anclas del desplegable de acciones. */
+.menu-pop.ctx {
+  position: fixed;
+  right: auto;
+  bottom: auto;
+  z-index: 120;
+  min-width: 210px;
+  max-width: min(320px, 90vw);
+}
+.ctx-titulo {
+  padding: 6px 10px 7px;
+  margin-bottom: 3px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ctx-icono {
+  width: 16px;
+  text-align: center;
+  flex: none;
+}
+/* Capa invisible que se come el siguiente clic para cerrar el menú. */
+.ctx-captura {
+  position: fixed;
+  inset: 0;
+  z-index: 119;
+}
+
+/* Confirmaciones propias (sustituyen al `confirm()` del navegador). */
+.dialog.confirmar {
+  width: min(420px, 92vw);
+}
+.confirmar-msg {
+  margin: 0;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+/* Favoritos: estrella sobre la carátula y botón del detalle. */
+.fav {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--accent);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+}
+.row-fav {
+  color: var(--accent);
+  font-size: 13px;
+  flex: none;
+}
+.btn.fav-btn {
+  padding: 8px 12px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* Deslizador de tamaño de card en la barra superior (extracto de Ajustes). */
+.card-size {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 4px;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+}
+.card-size input[type="range"] {
+  width: 84px;
+}
+
+/* El foco del mando también tiene que verse en el menú contextual. */
+:root[data-nav="mando"] .menu-item:focus {
+  outline: none;
+  background: var(--panel2);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+/* ---- Guión F.0_5: panel de Vista y secciones de la cuadrícula ---- */
+
+/* El panel pasa de una lista suelta de desplegables a tres bloques con nombre. */
+.filter-panel.vista {
+  width: 330px;
+  gap: 0;
+  max-height: min(70vh, 640px);
+  overflow-y: auto;
+}
+.vista-bloque {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.vista-bloque:last-of-type {
+  border-bottom: none;
+}
+.vista-bloque:first-of-type {
+  padding-top: 0;
+}
+.vista-titulo {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+/* Botón de dirección: ocupa el ancho y dice qué hace, no "asc/desc". */
+.btn.dir {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: flex-start;
+  font-size: 12px;
+}
+.dir-flecha {
+  color: var(--accent);
+  font-size: 10px;
+}
+
+/* Chips de vista (orden y secciones): se distinguen de los de filtro, que sí quitan cosas. */
+.chip.vista {
+  border-style: dashed;
+}
+
+/* ---- Secciones de la cuadrícula ---- */
+.secciones {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 18px;
+}
+.seccion-cab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  /* Se queda arriba al desplazar: con 200 juegos, saber en qué sección estás importa. */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  /*
+   * Altura **fija** y banda de lado a lado. Las dos cosas son necesarias:
+   *  - El `top` de una cabecera anidada se calcula como `nivel × 34px`, así que si la altura
+   *    real no fuera exactamente esa, quedaría una franja entre las dos por la que se verían
+   *    las carátulas pasando.
+   *  - Los márgenes negativos hacen que la banda cubra también el `padding` lateral del
+   *    contenedor con scroll; si no, el contenido asoma por los lados al quedarse pegada.
+   */
+  height: 34px;
+  box-sizing: border-box;
+  width: calc(100% + 36px);
+  margin-left: -18px;
+  margin-right: -18px;
+  padding: 0 18px;
+  /* Es un botón: pliega y despliega la sección. */
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+.seccion-cab:hover .seccion-nombre,
+.seccion-cab:focus-visible .seccion-nombre {
+  text-decoration: underline;
+}
+.seccion-flecha {
+  font-size: 11px;
+  line-height: 1;
+  color: var(--muted);
+  flex: none;
+  width: 12px;
+}
+.seccion-cab:hover .seccion-flecha {
+  color: var(--accent);
+}
+.seccion-nombre {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+  flex: none;
+}
+.seccion-linea {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.seccion-cuenta {
+  font-size: 11px;
+  color: var(--muted);
+  flex: none;
+}
+
+/* ---- Guión F.0_6: secciones anidadas, ejes y editor del árbol ---- */
+
+/*
+ * Segundo nivel: se lee como «dentro de», pero **el sangrado va en el contenido, no en la
+ * sección**. Si se sangrara la sección entera, su cabecera pegada dejaría de cubrir el borde
+ * izquierdo y las carátulas se verían por ahí — que es justo lo que pasaba.
+ */
+.seccion.anidada > .grid,
+.seccion.anidada > .list {
+  margin-left: 16px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border);
+}
+.seccion.anidada > .seccion-cab {
+  padding-left: 34px;
+}
+.seccion-cab.n2 .seccion-nombre {
+  color: var(--muted);
+  font-size: 11px;
+}
+/*
+ * Las dos cabeceras se quedan pegadas a la vez: la del eje arriba del todo y la anidada justo
+ * debajo. El `top` de cada una lo pone el componente (`nivel * 37px`), porque depende de la
+ * profundidad y CSS no puede saberla.
+ */
+.seccion-cab.n2 {
+  z-index: 9;
+}
+
+/* Un eje de la barra lateral es pulsable: por herencia trae los de todas sus hijas. */
+button.side-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+button.side-group.active {
+  color: var(--accent);
+}
+button.side-group:hover {
+  color: var(--text);
+}
+
+/* Propuesta de recolocación en el editor de categorías. */
+.sugerencias {
+  border: 1px dashed var(--accent2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+.sug-cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.sug-fila {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.cat-group-name {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}
+.cat-group-name:hover {
+  color: var(--accent);
+}
+
+/* ---- Guión F.0_6 §5: ajustes por pestañas ---- */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin: 0 -22px 6px;
+  padding: 0 22px;
+}
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  /* Que el subrayado no mueva el texto al activarse. */
+  margin-bottom: -1px;
+}
+.tab:hover {
+  color: var(--text);
+}
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---- Guión F.0_6 §3.2: submenús del menú contextual ---- */
+/* Una categoría que el juego ya tiene se marca con el acento, que es como se ve de un
+   vistazo a cuáles pertenece sin leer los iconos. */
+.menu-item.activa {
+  color: var(--accent);
+  font-weight: 600;
+}
+.ctx-grupo {
+  padding: 8px 10px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ctx-volver {
+  color: var(--muted);
+  font-weight: 600;
+}
+.ctx-flecha {
+  margin-left: auto;
+  color: var(--muted);
+}
+/* Con muchas categorías la página no debe salirse de la pantalla. */
+.menu-pop.ctx {
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+}

@@ -1,0 +1,18 @@
+# --- Artefactos de build (regenerables) ---
+app/src-tauri/target/
+app/src-tauri/gen/schemas/
+app/dist/
+app/node_modules/
+
+# Instaladores/portables generados por scripts/build.ps1
+dist/
+
+# --- Sistema / editor ---
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
