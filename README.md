@@ -42,11 +42,13 @@ maneja entero con mando desde el propio sofá.
 ### Biblioteca
 
 ![Biblioteca categorizada](docs/screenshots/biblioteca.png)
+
 **Biblioteca categorizada.** Todo lo que tienes instalado —y lo que has tenido— de todas las
 fuentes (Steam, carpetas propias, emuladores…) en una sola cuadrícula, agrupada sola por los ejes
 de categorías que definas.
 
 ![Biblioteca filtrada por coop y pantalla partida](docs/screenshots/biblioteca-coop-splitscreen.png)
+
 **Biblioteca de juegos específicamente con Online Co-Op, Couch Co-Op, Split-Screen, etc.** —
 cómodo de identificar, estén donde estén. Filtrando por estas categorías se ve de un vistazo qué
 hay instalado para jugar juntos, sin que importe en qué tienda o carpeta esté cada juego.
@@ -54,16 +56,19 @@ hay instalado para jugar juntos, sin que importe en qué tienda o carpeta esté 
 ### Organización de cada juego
 
 ![Opciones con clic derecho sobre un juego](docs/screenshots/click-derecho-sobre-app.png)
+
 **Opciones con clic derecho sobre una app.** Lanzar, editar, clasificar en categorías, marcar
 como favorito, abrir su carpeta, cambiar de estado o eliminarlo — todo desde un menú contextual
 propio, también accesible con el mando.
 
 ![Opciones al editar un juego](docs/screenshots/editar-app-independiente.png)
+
 **Opciones al editar una app/juego.** Título, plataforma, número de jugadores, carátula,
 ejecutable principal y sus argumentos, y categorías — todo editable a mano y protegido frente al
 reescaneo en cuanto lo tocas.
 
 ![Launchers y ejecutables adicionales](docs/screenshots/launchers-y-ejecutables.png)
+
 **Editar una app y añadir launchers específicos, argumentos adicionales o ejecutables extra.**
 Por ejemplo, Elden Ring se puede lanzar por Steam, sin iniciar Steam, o por un ejecutable aparte
 —el del mod *Seamless Co-op*— todo configurado desde la misma ficha.
@@ -71,16 +76,19 @@ Por ejemplo, Elden Ring se puede lanzar por Steam, sin iniciar Steam, o por un e
 ### Lanzar un juego
 
 ![Opciones para iniciar un juego ya configurado](docs/screenshots/iniciar-steam-seamlesscoop-etc.png)
+
 **Distintas opciones para iniciar el juego configurado previamente.** La ficha del juego ofrece
 cada forma de lanzarlo que le hayas añadido —aquí, Elden Ring normal o directo a Seamless Co-op—
 junto a su tiempo de juego real.
 
 ![Juego con launcher independiente](docs/screenshots/iniciar-juego-launcher-independiente.png)
+
 **Caso de un juego con un launcher independiente**, que no es el de una tienda como Steam, EA o
 Epic Games (aquí, el launcher propio de AlderonGames para *Path of Titans*). Sirve con cualquier
 launcher y cualquier juego: elegir si abrir el juego directo o pasar antes por su launcher.
 
 ![Aviso de cuenta específica de Steam al lanzar](docs/screenshots/iniciar-juego-cuenta-especifica-steam.png)
+
 **Para juegos en Steam en distintas cuentas**, se puede configurar un aviso que pide confirmar la
 cuenta específica antes de lanzar; Steam permite cambiar de cuenta con el mando de forma fácil, se
 cambia a la cuenta correspondiente y el juego se abre. Este mismo mecanismo también sirve como un
@@ -90,15 +98,18 @@ para un «¿has cerrado X app antes de iniciar esta?» que para preguntarte si h
 ### Aspecto y mando
 
 ![Selector de temas](docs/screenshots/ajustes-temas.png)
+
 **Temas predeterminados, con posibilidad de editar cada color y elemento.** Varios temas de
 fábrica más los tuyos propios, con vista previa en vivo y color de acento configurable.
 
 ![Mapeo del mando](docs/screenshots/ajustes-mando-mapeo.png)
+
 **Posibilidad de mapear cada control del mando**, tanto para mando de Xbox como de PlayStation.
 El stick derecho hace de **cursor** y mueve el ratón, y los **triggers hacen de clic izquierdo y
 derecho** — la app entera se puede manejar sin tocar el teclado ni el ratón.
 
 ![Fuentes de carátulas](docs/screenshots/ajustes-arte.png)
+
 **Posibilidad de añadir claves de API para buscar carátulas de juegos menos conocidos.** La
 cascada ya cubre sola lo más habitual (carpeta del juego, caché de Steam, tienda de Steam);
 SteamGridDB y RAWG amplían esa búsqueda a lo que no se reconoce por defecto, con claves gratuitas
@@ -107,6 +118,7 @@ y opcionales.
 ### Modo Sofá
 
 ![Modo Sofá disponible](docs/screenshots/iniciando-modo-sofa.png)
+
 **¡Modo Sofá disponible!** Se lanza desde la propia biblioteca y prepara la sesión para jugar
 desde el sofá, mando en mano.
 
