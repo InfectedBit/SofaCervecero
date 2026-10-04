@@ -1361,6 +1361,43 @@ mod tests {
         std::fs::remove_dir_all(&tmp).ok();
     }
 
+    /// El mismo rechazo (guión A.0_8) también vale contra el botón «Aplicar a todos» de
+    /// Fuentes, no solo contra el reescaneo automático. Es la misma regla de fuente: no debe
+    /// deshacer la decisión del usuario por ninguno de los dos caminos.
+    #[test]
+    fn una_categoria_quitada_a_mano_tampoco_vuelve_al_reafirmar_la_fuente() {
+        let conn = Connection::open_in_memory().unwrap();
+        library::init_schema(&conn).unwrap();
+
+        let cat = library::create_category(&conn, "Coop", None).unwrap();
+        let sid = library::add_source(&conn, "folder_library", r"M:\Juegos", None)
+            .unwrap()
+            .0;
+        let (solo, _) =
+            library::upsert_game(&conn, sid, &nuevo("k1", "Para Mí Solo", Some("a.exe"))).unwrap();
+        let (otro, _) =
+            library::upsert_game(&conn, sid, &nuevo("k2", "Coop Uno", Some("a.exe"))).unwrap();
+
+        library::assign_source_category(&conn, sid, cat, true).unwrap();
+        assert!(library::get_game(&conn, solo).unwrap().unwrap().categories.contains(&"Coop".to_string()));
+
+        // El usuario se la quita a uno…
+        library::unassign_category(&conn, solo, cat).unwrap();
+
+        // …y alguien vuelve a pulsar «Aplicar a todos» en Fuentes (p. ej. para que la
+        // categoría le llegue a un juego nuevo de la misma carpeta).
+        library::assign_source_category(&conn, sid, cat, true).unwrap();
+
+        assert!(
+            !library::get_game(&conn, solo).unwrap().unwrap().categories.contains(&"Coop".to_string()),
+            "«Aplicar a todos» tampoco puede deshacer lo que el usuario decidió"
+        );
+        assert!(
+            library::get_game(&conn, otro).unwrap().unwrap().categories.contains(&"Coop".to_string()),
+            "y al que no la había rechazado, se la sigue poniendo"
+        );
+    }
+
     /// Añadir dos veces la misma carpeta no debe duplicar nada, aunque venga escrita distinta
     /// (guión A.0_6). En Windows `M:\Juegos`, `m:\juegos\` y `M:/Juegos` son la misma.
     #[test]

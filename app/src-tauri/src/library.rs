@@ -1048,6 +1048,11 @@ pub fn source_categories(conn: &Connection, source_id: i64) -> Result<Vec<i64>> 
 /// Asigna una categoría a una fuente. Con `retroactivo`, se la pone además a **todos** sus
 /// juegos, incluidos los del histórico — *"todos los que estén o hayan estado instalados"*.
 /// Devuelve cuántos juegos se han etiquetado.
+///
+/// Respeta el rechazo igual que `assign_category_auto` (guión A.0_8): si el usuario ya le
+/// quitó esta categoría a un juego concreto, pulsar «Aplicar a todos» en Fuentes no se lo
+/// vuelve a poner. Sin esto, era la misma regla de fuente la que no mandaba al reescanear
+/// pero sí mandaba al reafirmarla a mano desde el diálogo de Fuentes.
 pub fn assign_source_category(
     conn: &Connection,
     source_id: i64,
@@ -1061,10 +1066,13 @@ pub fn assign_source_category(
     if !retroactivo {
         return Ok(0);
     }
-    // Los excluidos se quedan fuera: el usuario ya dijo que no los quiere ver.
+    // Los excluidos se quedan fuera (ya dijo que no los quiere ver) y también los que el
+    // usuario ha rechazado a mano para esta categoría en concreto.
     conn.execute(
         "INSERT OR IGNORE INTO game_category (game_id, category_id)
-         SELECT id, ?2 FROM game WHERE source_id = ?1 AND state <> 'excluded'",
+         SELECT id, ?2 FROM game
+          WHERE source_id = ?1 AND state <> 'excluded'
+            AND id NOT IN (SELECT game_id FROM categoria_rechazada WHERE category_id = ?2)",
         params![source_id, category_id],
     )
 }
